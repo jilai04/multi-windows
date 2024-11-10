@@ -8,6 +8,8 @@ export class WindowManagerService {
 
   // 打开一个新的唯一窗口或聚焦已有的窗口
   openWindow(url: string, name: string) {
+    // const paramString = new URLSearchParams(params).toString();
+    // const fullUrl = `${window.location.origin}${url}?${paramString}`;
     if (this.windows[name] && !this.windows[name]?.closed) {
       // 如果窗口已存在且未关闭，则聚焦
       this.windows[name]?.focus();
@@ -40,5 +42,14 @@ export class WindowManagerService {
   restoreWindowState(name: string): any {
     const state = localStorage.getItem(name);
     return state ? JSON.parse(state) : null;
+  }
+
+  // 发送更新数据到指定窗口
+  updateWindowData(name: string, data: any) {
+    const window = this.windows[name];
+    if (window && !window.closed) {
+      window.postMessage(data, window.location.origin); // 向窗口发送数据
+      window.focus();  // 聚焦到该窗口
+    }
   }
 }

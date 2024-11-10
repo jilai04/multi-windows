@@ -8,11 +8,18 @@ import { WindowManagerService } from './window-manager.service';
 })
 export class WindowComponent implements OnInit, OnDestroy {
   @Input() windowName!: string; // 窗口的唯一名称
-  data: any = {}; // 窗口的状态数据
+  windowId!: string;
+  data: any = {};
 
   constructor(private windowManager: WindowManagerService) {}
 
   ngOnInit() {
+     // 监听父窗口发送的消息
+     window.addEventListener('message', (event: MessageEvent) => {
+      if (event.origin === window.location.origin) {  // 确保来源正确
+        this.data = event.data;  // 接收数据并更新组件
+      }
+    });
     // 恢复窗口状态
     const savedState = this.windowManager.restoreWindowState(this.windowName);
     if (savedState) {
