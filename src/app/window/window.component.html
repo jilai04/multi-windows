@@ -1,0 +1,12 @@
+<div>
+    <h2>{{ windowName }} Window</h2>
+    <div>
+      <label>Data: </label>
+      <input type="text" [(ngModel)]="data.content" placeholder="Enter data" />
+    </div>
+    <p>当前数据：{{ data.content }}</p>
+    <button (click)="updateData({ content: data.content })">更新数据</button>
+
+    <button (click)="openNewWindow('window2')">打开窗口 1</button>
+</div>
+  
