@@ -8,8 +8,9 @@ import { WindowManagerService } from './window-manager.service';
 })
 export class WindowComponent implements OnInit, OnDestroy {
   @Input() windowName!: string; // 窗口的唯一名称
-  windowId!: string;
+  windowId!: any;
   data: any = {};
+  message!: string;
 
   constructor(private windowManager: WindowManagerService) {}
 
@@ -17,7 +18,9 @@ export class WindowComponent implements OnInit, OnDestroy {
      // 监听父窗口发送的消息
      window.addEventListener('message', (event: MessageEvent) => {
       if (event.origin === window.location.origin) {  // 确保来源正确
-        this.data = event.data;  // 接收数据并更新组件
+        this.windowId = event.data.id;
+        this.message = event.data.message;  // 接收数据并更新组件
+        this.updateData({ content: this.message })
       }
     });
     // 恢复窗口状态

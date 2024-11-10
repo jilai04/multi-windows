@@ -16,7 +16,7 @@ export class HomeComponent {
 
   // 更新窗口数据
   updateWindowData(windowName: string) {
-    const updatedData = { message: '更新的数据' }; // 这里是要发送的更新数据
+    const updatedData = { message: 'Updated data', id: '001'}; // 这里是要发送的更新数据
     this.windowManager.updateWindowData(windowName, updatedData);
   }  
 }
